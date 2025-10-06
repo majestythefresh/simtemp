@@ -1,0 +1,10 @@
+# simtemp/kernel/Kbuild
+
+# Module name (without .ko extension)
+obj-m += nxp_simtemp.o
+
+# Header file paths
+ccflags-y += -I$(src)
+
+# Module version (optional)
+MODULE_VERSION := 1.0

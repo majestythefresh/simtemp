@@ -1,0 +1,38 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ * Device Tree for NXP Simulated Temperature Sensor
+ */
+
+/dts-v1/;
+
+/ {
+    compatible = "nxp,simtemp-board", "generic";
+    model = "NXP Simulated Temperature Sensor Board";
+    #address-cells = <2>;
+    #size-cells = <2>;
+
+    soc {
+        compatible = "simple-bus";
+        #address-cells = <1>;
+        #size-cells = <1>;
+        ranges = <0x0 0x0 0x0 0x40000000>;  /* Map soc to 0x40000000 */
+
+        simtemp: temperature-sensor@4000 {
+            compatible = "nxp,simtemp";
+            reg = <0x4000 0x1000>;
+            #thermal-sensor-cells = <0>;
+            
+            /* Optional properties */
+            nxp,initial-temperature = <25000>;    /* 25.000°C in millicelsius */
+            nxp,polling-interval-ms = <2000>;     /* 2 second polling interval */
+            
+            /* Trip point definitions (optional - can be set via sysfs) */
+            nxp,trip-points = 
+                <0 50000 1>,    /* trip 0: 50°C, passive */
+                <1 75000 2>,    /* trip 1: 75°C, hot */  
+                <2 90000 3>;    /* trip 2: 90°C, critical */
+            
+            status = "okay";
+        };
+    };
+};

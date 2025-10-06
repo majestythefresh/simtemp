@@ -1,0 +1,155 @@
+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+%YAML 1.2
+---
+$id: http://devicetree.org/schemas/thermal/nxp,simtemp.yaml#
+$schema: http://devicetree.org/meta-schemas/core.yaml#
+
+title: NXP Simulated Temperature Sensor
+
+maintainers:
+  - Arturo Plauchu <arturo.plauchu@gmail.com>
+
+description: |
+  The NXP Simulated Temperature Sensor is a software-based temperature sensor
+  that simulates temperature variations with configurable modes, trip points,
+  and thermal zone integration. It provides temperature readings in millicelsius
+  and supports multiple operation modes including normal, noisy, and ramp modes.
+
+properties:
+  compatible:
+    const: nxp,simtemp
+
+  reg:
+    maxItems: 1
+    description: |
+      Memory mapped I/O region for the simulated sensor.
+      Should cover at least 0x1000 bytes of address space.
+
+  "#thermal-sensor-cells":
+    const: 0
+    description: |
+      Must be 0 as this sensor doesn't need additional parameters when
+      referenced by thermal zones.
+
+  nxp,initial-temperature:
+    $ref: /schemas/types.yaml#/definitions/int32
+    description: |
+      Initial temperature value in millicelsius (thousandths of a degree Celsius).
+      Default value is 25000 (25.000°C) if not specified.
+    minimum: -40000
+    maximum: 125000
+
+  nxp,polling-interval-ms:
+    $ref: /schemas/types.yaml#/definitions/uint32
+    description: |
+      Temperature polling interval in milliseconds for the monitoring thread.
+      Default value is 2000 ms if not specified.
+    minimum: 100
+    maximum: 10000
+
+  nxp,trip-points:
+    $ref: /schemas/types.yaml#/definitions/uint32-array
+    description: |
+      Array of trip point definitions in the format:
+        <index temperature_mC type>
+      where:
+        - index: Trip point index (0-7)
+        - temperature_mC: Trip temperature in millicelsius
+        - type: Trip type (0=active, 1=passive, 2=hot, 3=critical)
+      
+      Example: <0 50000 1> for trip point 0 at 50°C with passive type
+    items:
+      minItems: 3
+      maxItems: 24  # 8 trip points * 3 values each
+
+  status:
+    $ref: /schemas/types.yaml#/definitions/string
+    description: |
+      Device status, typically "okay" for enabled devices or "disabled"
+      for devices that should not be activated.
+
+required:
+  - compatible
+  - reg
+  - "#thermal-sensor-cells"
+
+additionalProperties: false
+
+examples:
+  - |
+    // Example 1: Minimal configuration
+    #include <dt-bindings/thermal/thermal.h>
+    
+    soc {
+        #address-cells = <1>;
+        #size-cells = <1>;
+        
+        temperature-sensor@4000 {
+            compatible = "nxp,simtemp";
+            reg = <0x4000 0x1000>;
+            #thermal-sensor-cells = <0>;
+        };
+    };
+
+  - |
+    // Example 2: Full configuration with trip points
+    #include <dt-bindings/thermal/thermal.h>
+    
+    soc {
+        #address-cells = <1>;
+        #size-cells = <1>;
+        
+        temperature-sensor@4000 {
+            compatible = "nxp,simtemp";
+            reg = <0x4000 0x1000>;
+            #thermal-sensor-cells = <0>;
+            
+            nxp,initial-temperature = <25000>;    /* 25.000°C */
+            nxp,polling-interval-ms = <2000>;     /* 2 seconds */
+            
+            /* Trip points: index, temperature(mC), type */
+            nxp,trip-points = <0 50000 1>,        /* 50°C, passive */
+                              <1 75000 2>,        /* 75°C, hot */
+                              <2 90000 3>;        /* 90°C, critical */
+            status = "okay";
+        };
+    };
+
+  - |
+    // Example 3: Integration with thermal zone
+    #include <dt-bindings/thermal/thermal.h>
+    
+    thermal-zones {
+        cpu-thermal {
+            polling-delay-passive = <1000>;
+            polling-delay = <5000>;
+            thermal-sensors = <&simtemp>;
+            
+            trips {
+                cpu_alert0: trip0 {
+                    temperature = <50000>;
+                    hysteresis = <2000>;
+                    type = "passive";
+                };
+                cpu_crit: trip1 {
+                    temperature = <90000>;
+                    hysteresis = <0>;
+                    type = "critical";
+                };
+            };
+        };
+    };
+    
+    soc {
+        #address-cells = <1>;
+        #size-cells = <1>;
+        
+        simtemp: temperature-sensor@4000 {
+            compatible = "nxp,simtemp";
+            reg = <0x4000 0x1000>;
+            #thermal-sensor-cells = <0>;
+            nxp,initial-temperature = <35000>;
+            nxp,polling-interval-ms = <1000>;
+            status = "okay";
+        };
+    };
