@@ -1,0 +1,193 @@
+# simtemp/.gitignore
+
+# Kernel module build artifacts
+*.ko
+*.mod
+*.mod.c
+*.mod.o
+*.o
+*.o.cmd
+*.ko.cmd
+*.mod.cmd
+*.order
+*.symvers
+*.dwo
+*.bin
+
+# Module-specific files
+modules.order
+Module.symvers
+.modules.order.cmd
+.Module.symvers.cmd
+
+# Build directories
+/.tmp_versions/
+/Module.symvers
+/modules.order
+
+# Kernel specific
+/.builtin.a
+/vmlinux
+/vmlinux.o
+
+# Object files
+/*.o
+/*.o.cmd
+
+# Precompiled headers
+*.gch
+*.pch
+
+# Static libraries
+*.a
+*.la
+
+# Dynamic libraries
+*.so
+*.so.*
+*.dylib
+
+# Distribution / packaging
+/.dist/
+/Packages/
+/*.deb
+/*.rpm
+/*.tar.gz
+/*.tgz
+/*.zip
+
+# Debug files
+*.dmp
+*.elf
+*.exe
+*.lst
+
+# Backup files
+*~
+*.bak
+*.swp
+*.swo
+.*.sw?
+
+# IDE and editor files
+# Vim
+.*.swp
+*.un~
+*.tmp
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# Eclipse
+.project
+.cproject
+.settings/
+
+# Patch files
+*.patch
+*.diff
+
+# Documentation
+*.pdf
+*.ps
+*.dvi
+*.out
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.temp
+
+# Dependency files
+*.d
+.deps/
+
+# Configuration files (except the ones we want to keep)
+/config.local
+/.config.old
+
+# Device tree compiled files
+*.dtb
+*.dtbo
+/dts/*.dtb
+/dts/*.dtbo
+
+# Kernel specific build system files
+/.kernelrelease
+/.kernelvariables
+
+# Test and coverage files
+/.gcda
+/.gcno
+/.gcov
+/coverage/
+
+# Profiling data
+*.gmon
+
+# Preprocessed source files
+*.i
+*.ii
+
+# Assembly files
+*.s
+*.S
+
+# Tag files
+tags
+TAGS
+cscope.*
+ncscope.*
+
+# Package management
+/.pc/
+/debian/
+
+# Development tools
+/.gdb_history
+/.pyc
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Autotools
+autom4te.cache
+aclocal.m4
+compile
+config.guess
+config.h
+config.h.in
+config.log
+config.status
+config.sub
+configure
+depcomp
+install-sh
+libtool
+ltmain.sh
+m4/
+missing
+Makefile.in
+stamp-h1
+
+# CMake
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+*.cmake
+/.cmake/
+
+# Compiled Python files
+__pycache__/
+*.pyc
