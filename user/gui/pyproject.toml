@@ -1,0 +1,40 @@
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "nxp-simtemp-gui"
+version = "1.0.0"
+description = "GUI for NXP Simulated Temperature Sensor kernel driver"
+authors = ["Arturo Plauchu <arturo.plauchu@gmail.com>"]
+license = "GPL-2.0-only"
+readme = "README.md"
+packages = [{include = "lib", from = "../"}]
+
+[tool.poetry.dependencies]
+python = ">=3.9,<3.10"
+taskipy = "1.10.3"
+pyqtgraph = "0.13.7"
+numpy = "1.26.4"
+
+[tool.poetry.extras]
+gui = ["pyqt5"]
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.5"
+pytest-mock = "3.10.0"
+black = "24.3.0"
+pylint = "2.16.2"
+radon = "5.1.0"
+coverage = "7.2.1"
+
+[tool.black]
+line-length = 88
+target-version = ['py39']
+
+[tool.taskipy.tasks]
+nxp_simtemp_gui = "python3 main.py"
+test = "pytest tests/"
+lint = "pylint lib/"
+format = "black lib/"
+coverage = "coverage run -m pytest tests/ && coverage report"
