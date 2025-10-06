@@ -1,6 +1,6 @@
-# NXP Simulated Temperature Sensor GUI
+# NXP Simulated Temperature
 
-A GUI for interacting with the NXP Simulated Temperature Sensor kernel driver.
+NXP Simulated Temperature Sensor kernel driver.
 
 ## Installation
 
@@ -10,8 +10,46 @@ A GUI for interacting with the NXP Simulated Temperature Sensor kernel driver.
 cd ../scripts
 
 ./build.sh --driver "ARCH=arm64 CC=aarch64-linux-gnu-gcc"
+
 ```
-### 2. For GUI:
+
+##### Once completed udev rules is installed and .ko modules loaded
+
+### 2. For Cli there are two options:
+
+#### a) Install using Poetry
+```bash
+cd ../scripts
+
+./build.sh --poetry
+```
+##### Once completed you can run CLI
+```bash
+cd ../user/cli
+
+poetry run task nxp_simtemp [command] [options]
+
+poetry run task nxp_simtemp --help
+```
+#### b) Install using Standalone python
+```bash
+cd ../user/cli
+pip3 install -r requirements.txt
+
+```
+```bash
+cd ../user/scripts
+
+./build.sh --standalone
+```
+##### Once completed you can run CLI
+```bash
+nxp_simtemp [command] [options]
+nxp_simtemp --help
+```
+
+
+### 3. For GUI there are two options:
 
 #### a) Install using Poetry
 ```bash
@@ -47,11 +85,10 @@ cd ../user/cli
 pip3 install -r requirements.txt
 
 ```
-
 ##### Once completed you can run GUI
 ```bash
 cd ../user/gui
 ./main.py
 ```
 
-
+### For more instruction read user/cli/README.md

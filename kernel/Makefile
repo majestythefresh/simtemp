@@ -59,15 +59,15 @@ dtb:
 	fi
 
 # Device Tree schema validation
-dt_validation: $(DT_BINDING)
+dt_validation: $(DTB_DIR)/$(DT_BINDING)
 	@echo "Validating Device Tree binding..."
 	@if command -v dt-validate >/dev/null 2>&1; then \
-		dt-validate -s $(DT_BINDING) $(DTB_DIR)/$(DTS_SRC) || exit 1; \
-		dt-validate -s $(DT_BINDING) $(DTB_DIR)/$(DTS_TEST_SRC) || exit 1; \
+		dt-validate -s $(DTB_DIR)/$(DT_BINDING) $(DTB_DIR)/$(DTS_SRC) || exit 1; \
+		dt-validate -s $(DTB_DIR)/$(DT_BINDING) $(DTB_DIR)/$(DTS_TEST_SRC) || exit 1; \
 		echo "Device Tree validation passed"; \
 	elif command -v dt_binding_check >/dev/null 2>&1; then \
-		dt_binding_check -s $(DT_BINDING) $(DTB_DIR)/$(DTS_SRC) || exit 1; \
-		dt_binding_check -s $(DT_BINDING) $(DTB_DIR)/$(DTS_TEST_SRC) || exit 1; \
+		dt_binding_check -s $(DTB_DIR)/$(DT_BINDING) $(DTB_DIR)/$(DTS_SRC) || exit 1; \
+		dt_binding_check -s $(DTB_DIR)/$(DT_BINDING) $(DTB_DIR)/$(DTS_TEST_SRC) || exit 1; \
 		echo "Device Tree validation passed"; \
 	else \
 		echo "Warning: dt-validate or dt_binding_check not found, skipping validation"; \

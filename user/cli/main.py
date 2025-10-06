@@ -33,6 +33,8 @@ Examples:
   %(prog)s read-stream --timeout 5.0             # Stream read with 5 second timeout
   %(prog)s mode get                              # Get current operation mode
   %(prog)s mode set noisy                        # Set operation mode to noisy
+  %(prog)s sampling get                          # Get current operation sampling
+  %(prog)s sampling set 1000                     # Set operation sampling to 1 sec
   %(prog)s stats                                 # Show device statistics
   %(prog)s trip set 0 80.0 THERMAL_TRIP_PASSIVE  # Set threshold trip point 0 to 80°C of type 1
                                                 # trip types: THERMAL_TRIP_ACTIVE = 0

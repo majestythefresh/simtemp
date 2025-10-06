@@ -7,20 +7,25 @@ A command-line interface for interacting with the NXP Simulated Temperature Sens
 
 ### 1. Install Driver using the proper compiler and ARCH
 ```bash
-cd ../user/cli
+cd ../scripts
 
 ./build.sh --driver "ARCH=arm64 CC=aarch64-linux-gnu-gcc"
+
 ```
+##### Once completed udev rules is installed and .ko modules loaded
+
 ### 2. For Cli there are two options:
 
 #### a) Install using Poetry
 ```bash
-cd ../user/cli
+cd ../scripts
 
 ./build.sh --poetry
 ```
 ##### Once completed you can run CLI
 ```bash
+cd ../user/cli
+
 poetry run task nxp_simtemp [command] [options]
 
 poetry run task nxp_simtemp --help
@@ -28,6 +33,12 @@ poetry run task nxp_simtemp --help
 #### b) Install using Standalone python
 ```bash
 cd ../user/cli
+pip3 install -r requirements.txt
+
+```
+
+```bash
+cd ../user/scripts
 
 ./build.sh --standalone
 ```
@@ -41,7 +52,7 @@ nxp_simtemp --help
 
 ### 1. Clean Driver
 ```bash
-cd ../user/cli
+cd ../user/scripts
 
 ./build.sh --clean-driver
 ```
@@ -49,19 +60,19 @@ cd ../user/cli
 
 #### a) Cleaning Poetry env
 ```bash
-cd ../user/cli
+cd ../scripts
 
 ./build.sh --clean-poetry
 ```
 #### b) Cleaning Standalone python
 ```bash
-cd ../user/cli
+cd ../scripts
 
 ./build.sh --clean-standalone
 ```
 #### c) Cleaning All
 ```bash
-cd ../user/cli
+cd ../scripts
 
 ./build.sh --clean-all
 ```

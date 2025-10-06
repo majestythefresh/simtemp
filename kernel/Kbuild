@@ -2,6 +2,7 @@
 
 # Module name (without .ko extension)
 obj-m += nxp_simtemp.o
+obj-m += nxp_simtemp_device.o
 
 # Header file paths
 ccflags-y += -I$(src)
